@@ -86,6 +86,7 @@ defmodule ChitChatWeb do
       # Core UI components and translation
       import ChitChatWeb.CoreComponents
       import ChitChatWeb.Gettext
+      import Phoenix.HTML.Form
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
