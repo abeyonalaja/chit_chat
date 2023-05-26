@@ -18,8 +18,11 @@ defmodule ChitChatWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/login", SessionController, :new
+    get "/logout", SessionController, :delete
     resources "/users", UserController
     resources "/rooms", RoomController
+    resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
   end
 
   # Other scopes may use custom stacks.
