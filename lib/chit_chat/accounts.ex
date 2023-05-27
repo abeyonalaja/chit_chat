@@ -54,11 +54,6 @@ defmodule ChitChat.Accounts do
 
   """
   def create_user(attrs \\ %{}) do
-    IO.puts("IN CREATE USER ")
-    IO.inspect(attrs)
-    #    credential = %{password: "password", password_confirmation: "password_confirmation"}
-    #    attrs = %User{attrs | credential: credential}
-
     %User{}
     |> User.changeset(attrs)
     |> Ecto.Changeset.cast_assoc(:credential,
@@ -124,6 +119,22 @@ defmodule ChitChat.Accounts do
   end
 
   alias ChitChat.Accounts.Credential
+
+  def auth_by_email_password(email, given_pass) do
+    cred = Repo.get_by(Credential, email: email) |> Repo.preload(:user)
+
+    cond do
+      cred && Argon2.verify_pass(given_pass, cred.password_hash) ->
+        {:ok, cred.user}
+
+      cred ->
+        {:error, :unauthorized}
+
+      true ->
+        Argon2.no_user_verify()
+        {:error, :not_found}
+    end
+  end
 
   @doc """
   Returns the list of credentials.
