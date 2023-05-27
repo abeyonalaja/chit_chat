@@ -3,6 +3,8 @@ defmodule ChitChatWeb.UserController do
 
   alias ChitChat.Accounts
   alias ChitChat.Accounts.User
+  import ChitChatWeb.Auth, only: [logged_in_user: 2]
+  plug :logged_in_user when action not in [:new, :create]
 
   def index(conn, _params) do
     users = Accounts.list_users()

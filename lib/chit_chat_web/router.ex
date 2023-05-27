@@ -8,6 +8,7 @@ defmodule ChitChatWeb.Router do
     plug :put_root_layout, {ChitChatWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug ChitChatWeb.Auth
   end
 
   pipeline :api do

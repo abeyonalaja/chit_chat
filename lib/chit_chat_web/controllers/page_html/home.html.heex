@@ -47,7 +47,7 @@
       />
     </svg>
     <h1 class="text-brand mt-10 flex items-center text-sm font-semibold leading-6">
-    User ID: <%= @conn.assigns.user_id  %>
+    User ID: <%= @current_user &&  @conn.assigns.current_user.username  %>
       Phoenix Framework
       <small class="bg-brand/5 text-[0.8125rem] ml-3 rounded-full px-2 font-medium leading-6">
         v<%= Application.spec(:phoenix, :vsn) %>
