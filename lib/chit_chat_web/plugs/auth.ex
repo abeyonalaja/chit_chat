@@ -8,7 +8,7 @@ defmodule ChitChatWeb.Auth do
   def call(conn, _opts) do
     user_id = get_session(conn, :user_id)
     user = user_id && ChitChat.Accounts.get_user!(user_id)
-    assign(conn, :current_user, user)
+    put_current_user(conn, user)
   end
 
   def logged_in_user(conn = %{assigns: %{current_user: %{}}}, _), do: conn
@@ -18,5 +18,27 @@ defmodule ChitChatWeb.Auth do
     |> put_flash(:error, "You must be logged in")
     |> redirect(to: "/")
     |> halt()
+  end
+
+  def admin_user(conn = %{assigns: %{admin_user: true}}, _), do: conn
+
+  def admin_user(conn, opts) do
+    if opts[:pokerface] do
+      conn
+      |> put_status(404)
+      |> render(ChitChatWeb.ErrorHTML, "404.html")
+      |> halt()
+    end
+
+    conn
+    |> put_flash(:error, "You do not have access to that page")
+    |> redirect(to: "/")
+    |> halt()
+  end
+
+  defp put_current_user(conn, user) do
+    conn
+    |> assign(:current_user, user)
+    |> assign(:admin_user, false)
   end
 end

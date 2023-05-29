@@ -1,16 +1,35 @@
+<!--
 <.header>
-  Room <%= @room.id %>
-  <:subtitle>This is a room record from your database.</:subtitle>
-  <:actions>
+Room <%= @room.name %>
+<:subtitle>This is a room record from your database.</:subtitle>
+<:actions>
     <.link href={~p"/rooms/#{@room}/edit"}>
-      <.button>Edit room</.button>
-    </.link>
-  </:actions>
+    <.button>Edit roomaaa
+</.button>
+</.link>
+</:actions>
 </.header>
+-->
+<div class="flex flex-row bg-emerald-50">
+    <div class="flex flex-col bg-rose-50 flex-1">
+        <h1 class="text-xl font-bold">Room: <%= @room.name %></h1>
+        <%= Phoenix.HTML.Tag.content_tag  :div, id: "room", data: [id: @room.id] do%>
+        <% end %>
+        <ul>
+            <li>
+                Description <%= @room.description %>
+            </li>
 
-<.list>
-  <:item title="Name"><%= @room.name %></:item>
-  <:item title="Description"><%= @room.description %></:item>
-</.list>
-
+        </ul>
+    </div>
+    <div class="flex flex-col flex-1">
+        <h2 class="text-lg font-semibold">Chat</h2>
+        <div id="msg-container"></div>
+        <div>
+            <label for="msg-input">msage</label>
+            <textarea name="" id="msg-input" cols="30" rows="3" placeholder="Chat here"></textarea>
+            <button id="msg-submit">Send</button>
+        </div>
+    </div>
+</div>
 <.back navigate={~p"/rooms"}>Back to rooms</.back>

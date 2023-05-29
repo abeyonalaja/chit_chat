@@ -12,8 +12,6 @@ defmodule ChitChatWeb.SessionController do
   def create(conn, %{"credential" => %{"email" => email, "password" => password}}) do
     case Accounts.auth_by_email_password(email, password) do
       {:ok, user} ->
-        IO.inspect(user)
-
         conn
         |> put_flash(:info, "Welcome back")
         |> put_session(:user_id, user.id)
